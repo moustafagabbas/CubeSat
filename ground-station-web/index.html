@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <style>
+        p   {
+         color: red;
+        }
+
+    </style>
+    <title>Sensor Data</title>
+    <script>function updateData() { var xhttp = new XMLHttpRequest(); xhttp.onreadystatechange = function () { if (this.readyState == 4 && this.status == 200) { var data = this.responseText.split(','); document.getElementById('temperature').innerHTML = data[0]; document.getElementById('humidity').innerHTML = data[1]; document.getElementById('gx').innerHTML = data[2]; document.getElementById('gy').innerHTML = data[3]; document.getElementById('gz').innerHTML = data[4]; document.getElementById('accX').innerHTML = data[5]; document.getElementById('accY').innerHTML = data[6]; document.getElementById('accZ').innerHTML = data[7]; document.getElementById('gasValue').innerHTML = data[8]; } }; xhttp.open('GET', '/data', true); xhttp.send(); } setInterval(updateData, 2000);</script>
+</head>
+
+<body>
+    <h1 id="head">Sensor Data</h1>
+    <p>Temperature: <span id='temperature'>--</span> &deg;C</p>
+    <p>Humidity: <span id='humidity'>--</span> %</p>
+    <p>Gyroscope Data:</p>
+    <h5>Rotation</h5>
+    <p>gx: <span id='gx'>--</span> &deg;/s</p>
+    <p>gy: <span id='gy'>--</span> &deg;/s</p>
+    <p>gz: <span id='gz'>--</span> &deg;/s</p>
+    <h5>Acceleration</h5>
+    <p>X:<span id='accX'>--</span>
+    <p>Y:<span id='accY'>--</span>
+    <p>Z:<span id='accZ'>--</span>
+    <p>Gas Sensor:<span id='gasValue'>--</span></p>
+</body>
+
+</html>
