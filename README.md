@@ -61,13 +61,12 @@ All 21 photos are in [`images/photos/`](images/photos/).
 
 | Folder | What is inside |
 |---|---|
-| [`firmware/cubesat_obc/`](firmware/cubesat_obc/) | **Cleaned-up ESP32 code (2026).** Reads all sensors every 2 s without blocking, prints a report on the Serial Monitor, and runs a Wi-Fi web server (`/` = live page, `/data` = CSV values). |
-| [`firmware/original_2023/`](firmware/original_2023/) | The original 2023 test code from the project book, kept as it was (only the Wi-Fi password removed). It prints sensor values on the Serial Monitor. |
+| [`firmware/cubesat_obc/`](firmware/cubesat_obc/) | **ESP32 firmware.** Reads all sensors every 2 s without blocking, prints a report on the Serial Monitor, and runs a Wi-Fi web server (`/` = live page, `/data` = CSV values). |
 | [`ground-station-web/`](ground-station-web/) | The original ground station web page. It asks the ESP32 for new readings every 2 seconds and shows them. |
 
-**What changed in the cleaned-up code:** GPS moved to its own UART (Serial2), no more `delay()` or
-`while(true)` in the loop, the Wi-Fi web server that the page needs was added, gyroscope values converted
-to °/s, and the Wi-Fi details moved to a `secrets.h` file that is not uploaded.
+**Code design:** the GPS has its own UART (Serial2), the main loop never blocks (timing with `millis()`),
+the web server answers the ground station page, gyroscope values are in °/s, and the Wi-Fi details are kept
+in a `secrets.h` file that is not uploaded.
 
 **How to run it**
 1. Install the Arduino IDE with the ESP32 board package.
@@ -85,7 +84,7 @@ to °/s, and the Wi-Fi details moved to a `secrets.h` file that is not uploaded.
 | LDR sun sensors 1–4 | 32, 33, 27, 14 |
 | ADC side channels 1–4 | 36, 39, 34, 35 |
 | MPU-6050 | I2C (default SDA 21 / SCL 22) |
-| GPS (cleaned code) | RX2 = 16, TX2 = 17 |
+| GPS | RX2 = 16, TX2 = 17 |
 
 ## Presentation
 
@@ -95,8 +94,7 @@ Our final project presentation: [docs/CubeSat-1U-Presentation.pdf](docs/CubeSat-
 
 ```
 firmware/
-  cubesat_obc/          cleaned-up ESP32 code + secrets.example.h
-  original_2023/        original code from the project book
+  cubesat_obc/          ESP32 firmware + secrets.example.h
 ground-station-web/     web page that shows live readings
 images/
   photos/               build and test photos
